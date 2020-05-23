@@ -1,0 +1,48 @@
+{
+  "name": "spider",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "lodash.debounce": "^4.0.8"
+  },
+  "scripts": {
+    "start-app": "react-scripts start",
+    "start": "concurrently --kill-others \"npm run watch-extension\" \"npm run start-app\"",
+    "watch-extension": "cross-env SCRIPT=extension node ./script/watch.js",
+    "build-extension": "./script/build.sh extension",
+    "build-others": "./script/build.sh others",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "chokidar": "^3.4.0",
+    "concurrently": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "shelljs": "^0.8.4"
+  },
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

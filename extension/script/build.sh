@@ -21,23 +21,7 @@ build_extension() {
 build_others() {
     echo 'building others'
 
-    # enable webpack(need a webpack.config.js) if you
-    # want background.js to be minified
-
-#    webpack
-
-    # background.js and content_script.js should be copied
-    # to dist if no webpack enabled
     cp src/background/background.js dist
-    # cp src/content/content_script.js dist
-
-#    cp src/background/firebase*.js dist
-#    cp src/background/api.js dist
-    mv dist/index.html dist/popup.html
-
-    cp public/manifest.json dist/manifest.json
-
-    cp -r public/images dist
 }
 
 if [ $# -eq 0 ]; then

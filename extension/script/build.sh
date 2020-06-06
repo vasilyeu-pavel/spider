@@ -12,6 +12,8 @@ build_extension() {
 
     mkdir -p dist
     cp -r build/* dist
+    cp src/background/background.js dist
+    cp src/content/content.js dist
 
     mv dist/index.html dist/popup.html
 }
@@ -29,11 +31,10 @@ build_others() {
     cp src/background/background.js dist
     # cp src/content/content_script.js dist
 
-    cp src/background/background.html dist
 #    cp src/background/firebase*.js dist
 #    cp src/background/api.js dist
     mv dist/index.html dist/popup.html
-    cp dist/popup.html dist/options.html
+
     cp public/manifest.json dist/manifest.json
 
     cp -r public/images dist

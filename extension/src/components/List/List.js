@@ -1,40 +1,12 @@
-/* global chrome */
+import React from "react";
+import CheckBox from "../../modules/App/App";
 
-import React, { useEffect, useState } from 'react';
+import { onMouseEnter, onMouseLeave } from "../../utils/events";
+import { toggleFullScreen, toggleRecord } from "../../utils/API";
 
-import CheckBox from '../../components/CheckBox/CheckBox';
+import { style } from './style'
 
-import { onMouseEnter, onMouseLeave } from '../../utils/events'
-import { getTags, toggleFullScreen, toggleRecord } from '../../utils/API'
-
-const isAvailable = ({ payload: { status } }) => status === 200;
-
-const style = {
-    height: '28px',
-    fontSize: '12px',
-    background: '#e9ecef',
-    padding: '5px',
-    overflow: 'hidden',
-    backgroundColor: '#e9ecef',
-    border: '1px solid #ced4da',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-};
-
-const App = () => {
-    const [tags, setTags] = useState(null);
-
-    const setTagsCB = (response) => {
-        const { tags } = response.payload;
-        isAvailable(response) && setTags(tags);
-    };
-
-    useEffect(() => {
-        getTags(setTagsCB)
-    }, []);
-
-    if (!tags) return null;
-
+const List = ({ tags }) => {
     return (
         <div className="row w-100">
             {tags.links.map((link, i) => (
@@ -66,4 +38,4 @@ const App = () => {
     )
 };
 
-export default App
+export default List

@@ -1,5 +1,21 @@
 const selector = 'video';
 
+const onFullScreen = async (link, tags) => {
+    const video = tags.find((tag) => tag.src === link);
+
+    if (!video) return;
+
+    await video.requestFullscreen()
+};
+
+const offFullScreen = async (link, tags) => {
+    const video = tags.find((tag) => tag.src === link);
+
+    if (!video) return;
+
+    await video.exitFullscreen()
+};
+
 const drawBorder = (link, tags) => {
     const video = tags.find((tag) => tag.src === link);
 
@@ -63,26 +79,66 @@ const removeBorder = () => {
     });
 };
 
+const getCount = (tags) => ({
+    payload: {
+        status: 200,
+        tags: {
+            count: tags.length,
+            selector,
+            links: tags.map(el => el.src)
+        },
+    }
+});
+
+const startRecord = (link, tags) => {
+    const video = tags.find((tag) => tag.src === link);
+
+    if (!video) return;
+
+    console.log('startRecord')
+};
+
+const stopRecord = (link, tags) => {
+    const video = tags.find((tag) => tag.src === link);
+
+    if (!video) return;
+
+    console.log('stopRecord')
+};
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const tags = [...document.querySelectorAll(selector)];
 
-    if (request.type === 'getCount') {
-        sendResponse({
-            payload: {
-                status: 200,
-                tags: {
-                    count: tags.length,
-                    selector,
-                    links: tags.map(el => el.src)
-                },
-            }
-        });
-    }
+    console.log(JSON.stringify(request, null, 4));
 
-    if (request.type === 'draw') {
-        drawBorder(request.link, tags);
-    }
-    if (request.type === 'hide') {
-        removeBorder();
+    switch (request.type) {
+        case 'getCount': {
+            sendResponse(getCount(tags));
+            break;
+        }
+        case 'draw': {
+            drawBorder(request.link, tags);
+            break;
+        }
+        case 'hide': {
+            removeBorder();
+            break;
+        }
+        case 'onFullScreen': {
+            onFullScreen(request.link, tags);
+            break;
+        }
+        case 'offFullScreen': {
+            offFullScreen(request.link, tags);
+            break;
+        }
+        case 'startRecord': {
+            startRecord(request.link, tags);
+            break;
+        }
+        case 'stopRecord': {
+            stopRecord(request.link, tags);
+            break;
+        }
     }
 });
